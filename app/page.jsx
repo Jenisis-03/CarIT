@@ -1,8 +1,15 @@
 import CarCard from "@/components/carcard";
 import HomeSearch from "@/components/home-search";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { featuredCars } from "@/lib/data";
-import { ChevronRight } from "lucide-react";
+import { bodyTypes, carMakes, faqItems, featuredCars } from "@/lib/data";
+import { Calendar, Car, ChevronRight, Shield } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
@@ -26,9 +33,13 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-2xl font-bold"> Featured Cars</h2>
-            <Button variant="ghost" className="flex items-center"asChild>
-              <Link href="/cars">View All Cars</Link>
-              <ChevronRight className="ml-1 h-4 w-4" />
+            <Button variant="ghost" className="flex items-center" asChild>
+              <Link href="/cars">
+                <span className="flex items-center">
+                  View All Cars
+                  <ChevronRight className="ml-1 h-4 w-4" />
+                </span>
+              </Link>
             </Button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -36,6 +47,146 @@ export default function Home() {
               return <CarCard key={car.id} car={car} />;
             })}
           </div>
+        </div>
+      </section>
+
+      <section className="py-12 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-center mb-8">
+            <h2 className="text-2xl font-bold"> Browse Cars By Make</h2>
+            <Button variant="ghost" className="flex items-center" asChild>
+              <Link href="/cars">
+                <span className="flex items-center">
+                  View All Cars
+                  <ChevronRight className="ml-1 h-4 w-4" />
+                </span>
+              </Link>
+            </Button>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {carMakes.map((make) => {
+              return (
+                <Link
+                  key={make.name}
+                  href={`/cars?make=${make.name}`}
+                  className="bg-white rounded-lg shadow p-4 text-center hover:shadow-md transition cursor-pointer flex flex-col items-center"
+                >
+                  <div className="h-16 w-16 mx-auto mb-2 relative">
+                    {" "}
+                    {/* Fixed width */}
+                    <Image
+                      src={make.image}
+                      alt={make.name}
+                      fill
+                      priority
+                      style={{ objectFit: "contain" }}
+                    />
+                  </div>
+                  <h3 className="font-medium">{make.name}</h3>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl font-bold text-center mb-12">
+            Why Choose US?
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="bg-blue-100 text-blue-700 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                <Car className="h-8 w-8" />
+              </div>
+              <h3 className="text-xl font-boold mb-2">Wide Selection</h3>
+              <p className="text-gray-600">
+                Choose From Verified Vechiles From trusted Dealership and
+                Private Sellers.
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="bg-blue-100 text-blue-700 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                <Calendar className="h-8 w-8" />
+              </div>
+              <h3 className="text-xl font-boold mb-2">Easy Test drive</h3>
+              <p className="text-gray-600">
+                Book a test drive directly from the comfort of your home or
+                office.
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="bg-blue-100 text-blue-700 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                <Shield className="h-8 w-8" />
+              </div>
+              <h3 className="text-xl font-boold mb-2">Secure Process</h3>
+              <p className="text-gray-600">
+                Verified Lisitng and Secure Payment Gateway.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-12 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-center mb-8">
+            <h2 className="text-2xl font-bold"> Browse Cars By Body type</h2>
+            <Button variant="ghost" className="flex items-center" asChild>
+              <Link href="/cars">
+                View All Cars
+                <ChevronRight className="ml-1 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {bodyTypes.map((type) => {
+              return (
+                <Link
+                  key={type.name}
+                  href={`/cars?bodytype=${type.name}`}
+                  className="relative group cursor-pointer"
+                >
+                  <div className="overflow-hidden rounded-lg flex justify-end h-28 mb-4 relative">
+                    <Image
+                      src={type.image}
+                      alt={type.name}
+                      fill
+                      priority
+                      className="object-cover group-hover:scale-105 transition duration-300"
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent rounded-lg flex items-end p-2">
+                    <h3 className=" text-white text-xl font-bold pl-4 pb-2">
+                      {type.name}
+                    </h3>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-12 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl font-bold text-center mb-8">
+            Frequently Asked Questions
+          </h2>
+
+          <Accordion type="single" collapsible>
+            {faqItems.map((faq,index) => {
+              return (
+                <AccordionItem key={index} value={`items-${index}`}>
+                  <AccordionTrigger>{faq.question}</AccordionTrigger>
+                  <AccordionContent>{faq.answer}</AccordionContent>
+                </AccordionItem>
+              );
+            })}
+          </Accordion>
         </div>
       </section>
     </div>
