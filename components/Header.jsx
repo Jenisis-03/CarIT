@@ -8,9 +8,11 @@ import {
   LayoutDashboard,
   ArrowLeftCircleIcon,
 } from "lucide-react";
+import { checkUser } from "@/lib/checkUser";
 
-const Header = ({ isAdminPage = false }) => {
-  const isAdmin = false; // Update this based on actual authentication logic
+const Header = async ({ isAdminPage = false }) => {
+  const user = await checkUser();
+  const isAdmin = user?.role === "ADMIN";
 
   return (
     <header className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b">
